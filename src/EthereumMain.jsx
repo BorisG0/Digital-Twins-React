@@ -1,6 +1,9 @@
 import { ethers } from "ethers";
+import { NFTData } from './NFTData';
+import React, { useEffect, useState } from 'react';
 
 export function EthereumMain () {
+    const[ tokenURI, setTokenURI ] = useState(null);
 
     async function sendTx() {
         const receiver = "0x6DEB4642bfcA6FaE36c29Be66Ed4b32a7dAAb0a7";
@@ -32,8 +35,9 @@ export function EthereumMain () {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
         const contract = new ethers.Contract(address, abi, provider);
-        const owner = await contract.tokenURI(1);
-        console.log(owner);
+        const uri = await contract.tokenURI(1);
+        setTokenURI(uri);
+        console.log(uri);
     }
 
     return (
@@ -45,6 +49,8 @@ export function EthereumMain () {
             <button onClick={sendTx}>Send Transaction</button>
             <br />
             <button onClick={callContract}>Call Contract</button>
+
+            <NFTData tokenURI = {tokenURI}/>
 
         </div>
     )

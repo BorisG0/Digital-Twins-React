@@ -6,10 +6,11 @@ const url2 = "https://ipfs.io/ipfs/QmQ4HTumB95wAQRP1bBwGDVcYid1P1Y2VScRTXJBtLtJU
 const url3 = "https://ipfs.io/ipfs/QmPxeEwnsGXesy9Rpv9qNnwqWJixhdwpVihL6uAiypDeuD";
 const urlImage = "https://ipfs.io/ipfs/QmXyz5zehrN4fqwJcHhNjYenki6SFGbavwTPFGnHFfrf4c";
 const testurl = "https://jsonplaceholder.typicode.com/todos/1";
+const url4 = "https://ipfs.io/ipfs/QmWazDwQToJGBjsXwDCF2CT1SYK377bHvYC5SC69VEvSrW/1.json";
 
-export function NFTData() {
+export function NFTData(tokenURI) {
     const [nftMetadata, setNftMetadata] = useState({});
-    const [nftImage, setNftImage] = useState({});
+    const [nftImage, setNftImage] = useState();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,23 +22,25 @@ export function NFTData() {
             'hashContains': 'QmQ4HTumB95wAQRP1bBwGDVcYid1P1Y2VScRTXJBtLtJUy'
           }
         });
-        console.log(response.data.rows[0]);
+        // console.log(response.data.rows[0]);
 
-        const response2 = await axios.get(url3);
-        console.log(response2.data);
+        const response2 = await axios.get(url4);
+        // console.log(response2.data);
         setNftMetadata(response2.data);
         const imgUrlSplit = response2.data.image.split('/');
         const imgHash = imgUrlSplit[imgUrlSplit.length - 1];
         setNftImage("https://ipfs.io/ipfs/" + imgHash);
-        console.log(nftImage);
+        // console.log(nftImage);
 
       } catch (error) {
         console.error(error);
       }
     };
 
+    console.log(url4);
+    console.log(tokenURI);
     fetchData();
-  }, []);
+  }, [tokenURI]);
 
 
 
