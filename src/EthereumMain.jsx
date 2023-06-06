@@ -1,22 +1,6 @@
 import { ethers } from "ethers";
-import { useEffect, useState } from "react";
 
 export function EthereumMain () {
-
-    const imageUrl = "https://www.shutterstock.com/image-photo/bunch-bananas-isolated-on-white-260nw-1722111529.jpg";
-    const [img, setImg] = useState();
-
-    const fetchImage = async () => {
-        const response = await fetch(imageUrl);
-        const blob = await response.blob();
-        const objectURL = URL.createObjectURL(blob);
-        setImg(objectURL);
-    }
-
-    useEffect(() => {
-        fetchImage();
-    }, [])
-
 
     async function sendTx() {
         const receiver = "0x6DEB4642bfcA6FaE36c29Be66Ed4b32a7dAAb0a7";
@@ -62,8 +46,6 @@ export function EthereumMain () {
             <br />
             <button onClick={callContract}>Call Contract</button>
 
-            <br />
-            <img src={img} />
         </div>
     )
 }
