@@ -24,7 +24,9 @@ export function NFTData(tokenURI) {
         });
         // console.log(response.data.rows[0]);
 
-        const response2 = await axios.get(url4);
+        if(!tokenURI.tokenURI) return;
+
+        const response2 = await axios.get(tokenURI.tokenURI);
         // console.log(response2.data);
         setNftMetadata(response2.data);
         const imgUrlSplit = response2.data.image.split('/');
@@ -36,9 +38,6 @@ export function NFTData(tokenURI) {
         console.error(error);
       }
     };
-
-    console.log(url4);
-    console.log(tokenURI);
     fetchData();
   }, [tokenURI]);
 

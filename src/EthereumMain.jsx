@@ -37,7 +37,7 @@ export function EthereumMain () {
         const contract = new ethers.Contract(address, abi, provider);
         const uri = await contract.tokenURI(1);
         setTokenURI(uri);
-        console.log(uri);
+        // console.log(uri);
     }
 
     return (
