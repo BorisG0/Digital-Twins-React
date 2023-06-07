@@ -10,15 +10,6 @@ export function NFTData(props) {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await axios.get('https://api.pinata.cloud/data/pinList?status=pinned&pinSizeMin=100', {
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJlYzJiN2ZlNS01ZjI0LTRiODEtOGZkMy1mMzk5NGFlOTk2NDYiLCJlbWFpbCI6Im1zcWVycWZhYnZvbWZ6bHZ6YkBiYml0cS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJpZCI6IkZSQTEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX0seyJpZCI6Ik5ZQzEiLCJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MX1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudGljYXRpb25UeXBlIjoic2NvcGVkS2V5Iiwic2NvcGVkS2V5S2V5IjoiODRiZDkxMjgzMTViYmFhNzgzMmEiLCJzY29wZWRLZXlTZWNyZXQiOiI4ZDBiNDc2ZjFhMzUzNDYwMzBmNjcxZDMyNzY4ODdjNTkzNjljMzFmYzdkYjQ3NDc4ODBiZGMzZThjMzJkNGVjIiwiaWF0IjoxNjg2MDczNTk5fQ.wgDcDlfnayfz_1c9Q2_Vl0Pn_HeyM8MzJeSfA-2Fmi0'
-            },
-            params: {
-                'hashContains': 'QmQ4HTumB95wAQRP1bBwGDVcYid1P1Y2VScRTXJBtLtJUy'
-            }
-            });
-
             if(!props.tokenURI) return;
 
             const tokenURISplit = props.tokenURI.split('/');
@@ -28,9 +19,9 @@ export function NFTData(props) {
                 tokenHash = tokenURISplit[tokenURISplit.length - 2] + "/" + tokenHash;
             }
 
-            const response2 = await axios.get(apiURL + tokenHash);
-            setNftMetadata(response2.data);
-            const imgUrlSplit = response2.data.image.split('/');
+            const response = await axios.get(apiURL + tokenHash);
+            setNftMetadata(response.data);
+            const imgUrlSplit = response.data.image.split('/');
             const imgHash = imgUrlSplit[imgUrlSplit.length - 1];
 
             setNftImage(apiURL + imgHash);
@@ -42,8 +33,6 @@ export function NFTData(props) {
         fetchData();
     }, [props]);
 
-
-
   return (
     <div>
       <h1>NFT Data</h1>
@@ -51,7 +40,21 @@ export function NFTData(props) {
         <p>
             {nftMetadata.name} <br />
             {nftMetadata.description} <br />
-            {props.tokenOwner}
+            {props.tokenOwner} <br />
+
+            {nftMetadata.name ? 
+                <>
+                    {nftMetadata.attributes.map((a, index)=> (
+                        <span key={index}>
+                            <>
+                                {a.trait_type}: {a.value}
+                            </>
+                            <br />
+                        </span>
+                    ))}
+                </>
+             : null}
+
         </p>
     </div>
   );
