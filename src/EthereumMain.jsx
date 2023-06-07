@@ -37,13 +37,17 @@ export function EthereumMain () {
         const address = "0x36373d2e0A8dBbBd96980Df1026F1B124bCd7878";
         const abi = require("./abi/SneakerToken.json");
 
-        await window.ethereum.send("eth_requestAccounts");
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        try{
+            await window.ethereum.send("eth_requestAccounts");
+            
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const contract = new ethers.Contract(contractAddress, abi, provider);
+            const uri = await contract.tokenURI(tokenId);
 
-        const contract = new ethers.Contract(contractAddress, abi, provider);
-        const uri = await contract.tokenURI(tokenId);
-        setTokenURI(uri);
-        // console.log(uri);
+            setTokenURI(uri);
+        }catch(err){
+            console.log(err);
+        }
     }
 
     return (
