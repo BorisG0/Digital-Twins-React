@@ -3,6 +3,9 @@ import { NFTData } from './NFTData';
 import React, { useEffect, useState } from 'react';
 
 export function EthereumMain () {
+    const [contractAddress, setContractAddress] = useState("");
+    const [tokenId, setTokenId] = useState("");
+
     const[ tokenURI, setTokenURI ] = useState(null);
 
     async function sendTx() {
@@ -28,14 +31,17 @@ export function EthereumMain () {
     }
 
     async function callContract() {
+        console.log(contractAddress);
+        console.log(tokenId);
+
         const address = "0x36373d2e0A8dBbBd96980Df1026F1B124bCd7878";
         const abi = require("./abi/SneakerToken.json");
 
         await window.ethereum.send("eth_requestAccounts");
         const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-        const contract = new ethers.Contract(address, abi, provider);
-        const uri = await contract.tokenURI(1);
+        const contract = new ethers.Contract(contractAddress, abi, provider);
+        const uri = await contract.tokenURI(tokenId);
         setTokenURI(uri);
         // console.log(uri);
     }
@@ -47,7 +53,9 @@ export function EthereumMain () {
             <h1>Ethereum Transactions</h1>
             
             <button onClick={sendTx}>Send Transaction</button>
-            <br />
+            <p></p>
+            <input type="text" id="contractAddress" placeholder="Contract Address" value={contractAddress} onChange={e => setContractAddress(e.target.value)}/>
+            <input type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
             <button onClick={callContract}>Call Contract</button>
 
             <NFTData tokenURI = {tokenURI}/>
