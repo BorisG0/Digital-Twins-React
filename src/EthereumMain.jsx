@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { NFTData } from './NFTData';
 import React, { useEffect, useState } from 'react';
+import { Button, TextField } from '@mui/material';
 
 export function EthereumMain () {
     const [contractAddress, setContractAddress] = useState("");
@@ -39,7 +40,7 @@ export function EthereumMain () {
 
         try{
             await window.ethereum.send("eth_requestAccounts");
-            
+
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const contract = new ethers.Contract(contractAddress, abi, provider);
             const uri = await contract.tokenURI(tokenId);
@@ -56,11 +57,12 @@ export function EthereumMain () {
 
             <h1>Ethereum Transactions</h1>
             
-            <button onClick={sendTx}>Send Transaction</button>
+            <Button variant="contained" onClick={sendTx}>Send Transaction</Button>
             <p></p>
-            <input type="text" id="contractAddress" placeholder="Contract Address" value={contractAddress} onChange={e => setContractAddress(e.target.value)}/>
-            <input type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
-            <button onClick={callContract}>Call Contract</button>
+            <TextField type="text" id="contractAddress" placeholder="Contract Address" value={contractAddress} onChange={e => setContractAddress(e.target.value)}/>
+            <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
+            <br/>
+            <Button variant="contained" onClick={callContract}>Call Contract</Button>
 
             <NFTData tokenURI = {tokenURI}/>
 
