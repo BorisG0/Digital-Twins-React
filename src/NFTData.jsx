@@ -8,6 +8,8 @@ const urlImage = "https://ipfs.io/ipfs/QmXyz5zehrN4fqwJcHhNjYenki6SFGbavwTPFGnHF
 const testurl = "https://jsonplaceholder.typicode.com/todos/1";
 const url4 = "https://ipfs.io/ipfs/QmWazDwQToJGBjsXwDCF2CT1SYK377bHvYC5SC69VEvSrW/1.json";
 
+const apiURL = "https://gateway.pinata.cloud/ipfs/";
+
 export function NFTData(tokenURI) {
     const [nftMetadata, setNftMetadata] = useState({});
     const [nftImage, setNftImage] = useState();
@@ -22,17 +24,22 @@ export function NFTData(tokenURI) {
             'hashContains': 'QmQ4HTumB95wAQRP1bBwGDVcYid1P1Y2VScRTXJBtLtJUy'
           }
         });
-        // console.log(response.data.rows[0]);
 
         if(!tokenURI.tokenURI) return;
 
-        const response2 = await axios.get(tokenURI.tokenURI);
-        // console.log(response2.data);
+        const tokenURISplit = tokenURI.tokenURI.split('/');
+        
+        let tokenHash = tokenURISplit[tokenURISplit.length - 1];
+        if(tokenURISplit.length == 6){
+            tokenHash = tokenURISplit[tokenURISplit.length - 2] + "/" + tokenHash;
+        }
+
+        const response2 = await axios.get(apiURL + tokenHash);
         setNftMetadata(response2.data);
         const imgUrlSplit = response2.data.image.split('/');
         const imgHash = imgUrlSplit[imgUrlSplit.length - 1];
-        setNftImage("https://ipfs.io/ipfs/" + imgHash);
-        // console.log(nftImage);
+
+        setNftImage(apiURL + imgHash);
 
       } catch (error) {
         console.error(error);
