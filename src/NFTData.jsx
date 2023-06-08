@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { List, ListItem, ListItemText, Divider } from '@mui/material';
 
 const apiURL = "https://gateway.pinata.cloud/ipfs/";
 
@@ -33,15 +34,33 @@ export function NFTData(props) {
         fetchData();
     }, [props]);
 
-  return (
-    <div>
-      <h1>NFT Data</h1>
-      <img src ={nftImage} alt="NFT" />
-        <p>
-            {nftMetadata.name} <br />
-            {nftMetadata.description} <br />
-            {props.tokenOwner} <br />
+    if(!props.tokenURI) return (<div></div>);
 
+  return (
+    <div id="nftMetadataDisplay">
+      <h1>NFT Data</h1>
+      <img src ={nftImage} alt="NFT" id="nftImage" />
+
+        <List id="nftMetadataList">
+            <ListItem button>
+                <ListItemText secondary="owner" primary={props.tokenOwner} />
+            </ListItem>
+            <Divider/>
+            <ListItem button divider>
+                <ListItemText secondary="name" primary={nftMetadata.name} />
+            </ListItem>
+            <ListItem button>
+                <ListItemText secondary="description" primary={nftMetadata.description} />
+            </ListItem>
+        </List>
+
+        <p>
+            
+            owner: {props.tokenOwner} <br />
+            name: {nftMetadata.name} <br />
+            description: {nftMetadata.description} <br />
+
+            attributes: <br />
             {nftMetadata.name ? 
                 <>
                     {nftMetadata.attributes.map((a, index)=> (
