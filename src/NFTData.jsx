@@ -39,7 +39,6 @@ export function NFTData(props) {
   return (
     <div id="nftMetadataDisplay">
       <h1>NFT Data</h1>
-      <img src ={nftImage} alt="NFT" id="nftImage" />
 
         <List id="nftMetadataList">
             <ListItem button>
@@ -49,8 +48,14 @@ export function NFTData(props) {
             <ListItem button divider>
                 <ListItemText secondary="name" primary={nftMetadata.name} />
             </ListItem>
-            <ListItem button>
+            <ListItem button divider>
                 <ListItemText secondary="description" primary={nftMetadata.description} />
+            </ListItem>
+            <ListItem button>
+                <div style={{ display: 'flex', flexDirection: 'column'}}>
+                    <img src ={nftImage} alt="NFT" id='nftImage'/>
+                    <ListItemText secondary="image"/>
+                </div>
             </ListItem>
         </List>
 

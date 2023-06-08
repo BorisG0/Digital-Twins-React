@@ -3,13 +3,16 @@
 }
 
 #nftImage{
-  width: 30%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 80%;
 }
 
 #nftMetadataList{
   width: 50%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.ListItem{
+  display: 'flex';
+  flexDirection: 'row';
 }
