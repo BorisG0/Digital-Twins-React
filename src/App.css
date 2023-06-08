@@ -11,8 +11,3 @@
   margin-left: auto;
   margin-right: auto;
 }
-
-.ListItem{
-  display: 'flex';
-  flexDirection: 'row';
-}
