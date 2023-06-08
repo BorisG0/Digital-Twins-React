@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List, ListItem, ListItemText, Divider } from '@mui/material';
+import { List, ListItem, ListItemText, Divider, Collapse } from '@mui/material';
+import {ExpandLess, ExpandMore} from '@mui/icons-material';
 
 const apiURL = "https://gateway.pinata.cloud/ipfs/";
 
 export function NFTData(props) {
     const [nftMetadata, setNftMetadata] = useState({});
     const [nftImage, setNftImage] = useState();
+
+    const [attributesOpen, setAttributesOpen] = useState(false);
+    const handleAttributesClick = () => {
+        setAttributesOpen(!attributesOpen);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -51,35 +57,28 @@ export function NFTData(props) {
             <ListItem button divider>
                 <ListItemText secondary="description" primary={nftMetadata.description} />
             </ListItem>
-            <ListItem button>
+            <ListItem button divider>
                 <div style={{ display: 'flex', flexDirection: 'column'}}>
                     <img src ={nftImage} alt="NFT" id='nftImage'/>
                     <ListItemText secondary="image"/>
                 </div>
             </ListItem>
-        </List>
-
-        <p>
-            
-            owner: {props.tokenOwner} <br />
-            name: {nftMetadata.name} <br />
-            description: {nftMetadata.description} <br />
-
-            attributes: <br />
-            {nftMetadata.name ? 
-                <>
+            <ListItem button onClick={handleAttributesClick}>
+                <ListItemText primary="attributes"/>
+                {attributesOpen ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={attributesOpen}>
+                {nftMetadata.attributes?
+                <List>
                     {nftMetadata.attributes.map((a, index)=> (
-                        <span key={index}>
-                            <>
-                                {a.trait_type}: {a.value}
-                            </>
-                            <br />
-                        </span>
+                        <ListItem button divider key={index} sx={{ pl: 4}}>
+                            <ListItemText primary={a.value} secondary={a.trait_type}/>
+                        </ListItem>
                     ))}
-                </>
-             : null}
-
-        </p>
+                </List>
+                : <div></div>}
+            </Collapse>
+        </List>
     </div>
   );
 }
