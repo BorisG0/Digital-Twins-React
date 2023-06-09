@@ -44,7 +44,7 @@ export function NFTData(props) {
 
   return (
     <div id="nftMetadataDisplay">
-      <h1>NFT Data</h1>
+      <h1>Display Sneaker NFT</h1>
 
         <List id="nftMetadataList">
             <ListItem button>
