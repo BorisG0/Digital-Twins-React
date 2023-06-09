@@ -57,30 +57,18 @@ export function EthereumMain () {
         }
     }
 
-    async function getContractData(){
-        const abi = require("./abi/SneakerToken2.json");
-
-        try{
-            await window.ethereum.send("eth_requestAccounts");
-
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const contract = new ethers.Contract(contractAddress, abi, provider);
-
-            const owner = await contract.owner();
-            setContractOwner(owner);
-        }catch(err){
-            console.log(err);
-        }
-    }
-
     return (
         <div>
-            {window.ethereum ? <p>MetaMask is installed!</p> : <p>MetaMask is not installed!</p>}
+            {window.ethereum ?
+                <>
+                    <p>MetaMask is installed!</p>
+                    <p>your address: </p>
+                </>
+            : <p>MetaMask is not installed!</p>}
 
             <h1>Ethereum Transactions</h1>
-            <TextField type="text" id="contractAddress" placeholder="Contract Address" value={contractAddress} onChange={e => setContractAddress(e.target.value)}/>
-            <Button variant="contained" onClick={getContractData}>set</Button>
-            <ContractData owner = {contractOwner}/>
+            
+            <ContractData owner = {contractOwner} setContractOwner={setContractOwner} address={contractAddress} setAddress={setContractAddress}/>
             {/* <Button variant="contained" onClick={sendTx}>Send Transaction</Button> */}
             <p></p>
             
