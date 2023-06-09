@@ -13,6 +13,8 @@ export function EthereumMain () {
     const[ tokenURI, setTokenURI ] = useState(null);
     const[ tokenOwner, setTokenOwner ] = useState();
 
+    const[userAddress, setUserAddress] = useState("");
+
     async function sendTx() {
         const receiver = "0x6DEB4642bfcA6FaE36c29Be66Ed4b32a7dAAb0a7";
         console.log("Sending Transaction");
@@ -34,6 +36,14 @@ export function EthereumMain () {
             console.log(err);
         }
     }
+
+    useEffect(() => {
+        if(window.ethereum){
+            window.ethereum.request({ method: "eth_requestAccounts" }).then((res) => {
+                setUserAddress(res[0]);
+            })
+        }
+    }, [window.ethereum]);
 
     async function callContract() {
         console.log("Calling Contract");
@@ -62,7 +72,7 @@ export function EthereumMain () {
             {window.ethereum ?
                 <>
                     <p>MetaMask is installed!</p>
-                    <p>your address: </p>
+                    {userAddress ? <p>your address: {userAddress}</p> : <p>no address</p>}
                 </>
             : <p>MetaMask is not installed!</p>}
 
