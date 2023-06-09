@@ -8,7 +8,7 @@ import { ContractData } from "./ContractData";
 export function EthereumMain () {
     const [contractAddress, setContractAddress] = useState("");
     const [contractOwner, setContractOwner] = useState("");
-    
+
     const[userAddress, setUserAddress] = useState("");
 
     async function sendTx() {
@@ -57,7 +57,7 @@ export function EthereumMain () {
 
             <NFTData address = {contractAddress}/>
 
-            <MintNFT/>
+            <MintNFT address = {contractAddress}/>
         </div>
     )
 }

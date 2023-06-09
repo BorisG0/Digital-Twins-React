@@ -9,11 +9,15 @@ const apiURL = "https://gateway.pinata.cloud/ipfs/";
 
 export function NFTData(props) {
     const [tokenId, setTokenId] = useState("");
-    const[ tokenURI, setTokenURI ] = useState(null);
-    const[ tokenOwner, setTokenOwner ] = useState();
+    const [tokenURI, setTokenURI] = useState(null);
+    const [tokenOwner, setTokenOwner] = useState();
 
     const [nftMetadata, setNftMetadata] = useState({});
     const [nftImage, setNftImage] = useState();
+
+    const [serialNumber, setSerialNumber] = useState("");
+    const [manufactureDate, setManufactureDate] = useState("");
+    const [type, setType] = useState("");
 
     const [attributesOpen, setAttributesOpen] = useState(false);
     const handleAttributesClick = () => {
@@ -33,6 +37,23 @@ export function NFTData(props) {
 
             setTokenURI(uri);
             setTokenOwner(owner);
+
+            try{
+                const serialNumber = await contract.serialNumber(tokenId);
+                const manufactureDate = await contract.manufactureDate(tokenId);
+                const type = await contract.typeOf(tokenId);
+
+                setSerialNumber(parseInt(serialNumber._hex.substring(2), 16));
+                setManufactureDate(parseInt(manufactureDate._hex.substring(2), 16));
+                setType(parseInt(type._hex.substring(2), 16));
+            }catch(err){
+                setSerialNumber("");
+                setManufactureDate("");
+                setType("");
+                console.log(err);
+            }
+
+            
         }catch(err){
             console.log(err);
         }
@@ -107,6 +128,12 @@ export function NFTData(props) {
                 : <div></div>}
             </Collapse>
         </List>
+
+        serialnumber: {serialNumber}
+        <br/>
+        manufacturedate: {manufactureDate}
+        <br/>
+        type: {type}
     </div>
   );
 }
