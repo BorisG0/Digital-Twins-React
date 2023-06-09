@@ -23,7 +23,7 @@ export function ContractData(props){
         <>
             <h1>Contract Data</h1>
             <TextField type="text" id="contractAddress" placeholder="Contract Address" value={props.address} onChange={e => props.setAddress(e.target.value)}/>
-            <Button variant="contained" onClick={getContractData}>set</Button>
+            <Button variant="contained" onClick={getContractData}>get info</Button>
             <p>Owner: {props.owner}</p>
         </>
         

@@ -8,11 +8,7 @@ import { ContractData } from "./ContractData";
 export function EthereumMain () {
     const [contractAddress, setContractAddress] = useState("");
     const [contractOwner, setContractOwner] = useState("");
-    const [tokenId, setTokenId] = useState("");
-
-    const[ tokenURI, setTokenURI ] = useState(null);
-    const[ tokenOwner, setTokenOwner ] = useState();
-
+    
     const[userAddress, setUserAddress] = useState("");
 
     async function sendTx() {
@@ -45,27 +41,6 @@ export function EthereumMain () {
         }
     }, [window.ethereum]);
 
-    async function callContract() {
-        console.log("Calling Contract");
-        console.log(contractAddress);
-        console.log(tokenId);
-
-        const abi = require("./abi/SneakerToken2.json");
-
-        try{
-            await window.ethereum.send("eth_requestAccounts");
-
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const contract = new ethers.Contract(contractAddress, abi, provider);
-            const uri = await contract.tokenURI(tokenId);
-            const owner = await contract.ownerOf(tokenId);
-
-            setTokenURI(uri);
-            setTokenOwner(owner);
-        }catch(err){
-            console.log(err);
-        }
-    }
 
     return (
         <div>
@@ -79,16 +54,8 @@ export function EthereumMain () {
             <h1>Ethereum Transactions</h1>
             
             <ContractData owner = {contractOwner} setContractOwner={setContractOwner} address={contractAddress} setAddress={setContractAddress}/>
-            {/* <Button variant="contained" onClick={sendTx}>Send Transaction</Button> */}
-            <p></p>
-            
-            <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
-            <br/>
-            <Button variant="contained" onClick={callContract}>Get NFT Data</Button>
 
-            
-
-            <NFTData tokenURI = {tokenURI} tokenOwner = {tokenOwner}/>
+            <NFTData address = {contractAddress}/>
 
             <MintNFT/>
         </div>
