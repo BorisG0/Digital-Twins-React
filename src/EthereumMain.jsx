@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { NFTData } from './NFTData';
 import React, { useEffect, useState } from 'react';
 import { Button, TextField } from '@mui/material';
+import { MintNFT } from "./MintNFT";
 
 export function EthereumMain () {
     const [contractAddress, setContractAddress] = useState("");
@@ -37,7 +38,6 @@ export function EthereumMain () {
         console.log(contractAddress);
         console.log(tokenId);
 
-        const address = "0x36373d2e0A8dBbBd96980Df1026F1B124bCd7878";
         const abi = require("./abi/SneakerToken.json");
 
         try{
@@ -69,6 +69,8 @@ export function EthereumMain () {
             <Button variant="contained" onClick={callContract}>Get NFT Data</Button>
 
             <NFTData tokenURI = {tokenURI} tokenOwner = {tokenOwner}/>
+
+            <MintNFT/>
         </div>
     )
 }

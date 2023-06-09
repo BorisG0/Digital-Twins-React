@@ -22,7 +22,7 @@ export function NFTData(props) {
             const tokenURISplit = props.tokenURI.split('/');
             
             let tokenHash = tokenURISplit[tokenURISplit.length - 1];
-            if(tokenURISplit.length == 6){
+            if(tokenHash.length != 46){
                 tokenHash = tokenURISplit[tokenURISplit.length - 2] + "/" + tokenHash;
             }
 
