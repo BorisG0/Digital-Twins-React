@@ -129,9 +129,9 @@ export function NFTData(props) {
             </Collapse>
         </List>
 
-        serialnumber: {serialNumber}
+        serial number: {serialNumber}
         <br/>
-        manufacturedate: {manufactureDate}
+        manufacture date: {manufactureDate}
         <br/>
         type: {type}
     </div>
