@@ -59,6 +59,42 @@ export function NFTData(props) {
         }
     }
 
+    async function getNFTDataERC1155() {
+        const abi = require("./abi/MyBikes.json");
+
+        try{
+            await window.ethereum.send("eth_requestAccounts");
+
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const contract = new ethers.Contract(props.address, abi, provider);
+            let uri = await contract.uri(tokenId);
+
+            const hex = (+tokenId).toString(16);
+            const padded = hex.padStart(64, '0');
+            
+            uri = uri.replace("{id}", padded);
+            console.log(hex);
+
+            setTokenURI(uri);
+            
+
+            try{
+                const serialNumber = await contract.mileages(tokenId);
+                setSerialNumber(parseInt(serialNumber._hex.substring(2), 16));
+
+            }catch(err){
+                setSerialNumber("");
+                setManufactureDate("");
+                setType("");
+                console.log(err);
+            }
+
+            
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -93,7 +129,9 @@ export function NFTData(props) {
 
         <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
         <br/>
-        <Button variant="contained" onClick={getNFTData}>Get NFT Data</Button>
+        <Button variant="contained" onClick={getNFTData}>Get NFT Data (ERC721)</Button>
+        <br/>
+        <Button variant="contained" onClick={getNFTDataERC1155}>Get NFT Data (ERC1155)</Button>
 
         <List id="nftMetadataList">
             <ListItem button>
