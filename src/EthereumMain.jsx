@@ -1,9 +1,8 @@
 import { ethers } from "ethers";
 import { NFTData } from './NFTData';
 import React, { useEffect, useState } from 'react';
-import { Button, TextField } from '@mui/material';
-import { MintNFT } from "./MintNFT";
 import { ContractData } from "./ContractData";
+import { MileageManager } from "./MileageManager";
 
 export function EthereumMain () {
     const [contractAddress, setContractAddress] = useState("");
@@ -56,8 +55,8 @@ export function EthereumMain () {
             <ContractData owner = {contractOwner} setContractOwner={setContractOwner} address={contractAddress} setAddress={setContractAddress}/>
 
             <NFTData address = {contractAddress}/>
-
-            <MintNFT address = {contractAddress}/>
+            <MileageManager address = {contractAddress}/>
+            {/* <MintNFT address = {contractAddress}/> */}
         </div>
     )
 }
