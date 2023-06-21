@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ContractData } from "./ContractData";
 import { MileageManager } from "./MileageManager";
 import { Button } from '@mui/material';
+import { CollectionDisplay } from './CollectionDisplay';
 
 export function EthereumMain () {
     const [adminPageOn, setAdminPageOn] = useState(false);
@@ -22,7 +23,7 @@ export function EthereumMain () {
 
     return (
         <div>
-            <Button variant="contained" onClick={() => setAdminPageOn(!adminPageOn)}>Toggle Admin Page</Button>
+            <Button variant="contained" onClick={() => setAdminPageOn(!adminPageOn)}>{adminPageOn ? <>admin</>: <>user</>}</Button>
             {window.ethereum ?
                 <>
                     <p>MetaMask is installed!</p>
@@ -32,14 +33,13 @@ export function EthereumMain () {
 
             {adminPageOn ?
                 <>
-                    <h1>Admin Page</h1>
                     <ContractData owner = {contractOwner} setContractOwner={setContractOwner} address={contractAddress} setAddress={setContractAddress}/>
 
                     <NFTData address = {contractAddress}/>
                     <MileageManager address = {contractAddress}/>
                 </>:
                 <>
-                    <h1>User Page</h1>
+                    <CollectionDisplay/>
                 </>
             }
 

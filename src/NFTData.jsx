@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List, ListItem, ListItemText, Divider, Collapse } from '@mui/material';
-import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import { Button, TextField } from '@mui/material';
 import { ethers } from "ethers";
+import { NFTDisplay} from './NFTDisplay';
 
 const apiURL = "https://gateway.pinata.cloud/ipfs/";
 
@@ -19,11 +18,6 @@ export function NFTData(props) {
     const [manufactureDate, setManufactureDate] = useState("");
     const [type, setType] = useState("");
     const [mileage, setMileage] = useState("");
-
-    const [attributesOpen, setAttributesOpen] = useState(false);
-    const handleAttributesClick = () => {
-        setAttributesOpen(!attributesOpen);
-    }
 
     async function getNFTData() {
         const abi = require("./abi/BikeTwins.json");
@@ -129,7 +123,7 @@ export function NFTData(props) {
 
   return (
     <div id="nftMetadataDisplay">
-      <h1>Display NFT</h1>
+      <h2>Display NFT</h2>
 
         <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
         <br/>
@@ -137,47 +131,7 @@ export function NFTData(props) {
         <br/>
         <Button variant="contained" onClick={getNFTDataERC1155}>Get NFT Data (ERC1155)</Button>
 
-        <List id="nftMetadataList">
-            <ListItem button>
-                <ListItemText secondary="owner" primary={tokenOwner} />
-            </ListItem>
-            <Divider/>
-            <ListItem button divider>
-                <ListItemText secondary="name" primary={nftMetadata.name} />
-            </ListItem>
-            <ListItem button divider>
-                <ListItemText secondary="description" primary={nftMetadata.description} />
-            </ListItem>
-            <ListItem button divider>
-                <div style={{ display: 'flex', flexDirection: 'column'}}>
-                    <img src ={nftImage} alt="NFT" id='nftImage'/>
-                    <ListItemText secondary="image"/>
-                </div>
-            </ListItem>
-            <ListItem button onClick={handleAttributesClick}>
-                <ListItemText primary="attributes"/>
-                {attributesOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={attributesOpen}>
-                {nftMetadata.attributes?
-                <List>
-                    {nftMetadata.attributes.map((a, index)=> (
-                        <ListItem button divider key={index} sx={{ pl: 4}}>
-                            <ListItemText primary={a.value} secondary={a.trait_type}/>
-                        </ListItem>
-                    ))}
-                </List>
-                : <div></div>}
-            </Collapse>
-        </List>
-
-        serial number: {serialNumber}
-        <br/>
-        manufacture date: {manufactureDate}
-        <br/>
-        type: {type}
-        <br/>
-        mileage: {mileage}
+        <NFTDisplay tokenOwner={tokenOwner} nftMetadata={nftMetadata} nftImage={nftImage} mileage={mileage}/>
     </div>
   );
 }

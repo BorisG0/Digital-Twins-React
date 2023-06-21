@@ -42,14 +42,15 @@ export function MileageManager(props){
 
     return (
         <>
-            <h1>Increase Mileage</h1>
+            <h2>Bike Manager</h2>
+            <h3>Increase Mileage</h3>
             <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
             <TextField type="text" placeholder="Amount" value={amount} onChange={e => setAmount(e.target.value)}/>
 
             <br/>
             <Button variant="contained" onClick={increaseMileage}>Increase</Button>
 
-            <h1>Mint new Bike</h1>
+            <h3>Mint new Bike</h3>
             <TextField type="text" id="receiver" placeholder="Receiver" value={receiver} onChange={e => setReceiver(e.target.value)}/>
             <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
             <br/>
