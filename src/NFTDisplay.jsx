@@ -11,43 +11,47 @@ export function NFTDisplay({tokenOwner, nftMetadata, nftImage, mileage}){
 
     return(
         <div>
-            <h2>NFT</h2>
-            <List id="nftMetadataList">
-            <ListItem button>
-                <ListItemText secondary="owner" primary={tokenOwner} />
-            </ListItem>
-            <Divider/>
-            <ListItem button divider>
-                <ListItemText secondary="name" primary={nftMetadata.name} />
-            </ListItem>
-            <ListItem button divider>
-                <ListItemText secondary="description" primary={nftMetadata.description} />
-            </ListItem>
-            <ListItem button divider>
-                <ListItemText secondary="mileage" primary={mileage} />
-            </ListItem>
-            <ListItem button divider>
-                <div style={{ display: 'flex', flexDirection: 'column'}}>
-                    <img src ={nftImage} alt="NFT" id='nftImage'/>
-                    <ListItemText secondary="image"/>
-                </div>
-            </ListItem>
-            <ListItem button onClick={handleAttributesClick}>
-                <ListItemText primary="attributes"/>
-                {attributesOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={attributesOpen}>
-                {nftMetadata.attributes?
-                <List>
-                    {nftMetadata.attributes.map((a, index)=> (
-                        <ListItem button divider key={index} sx={{ pl: 4}}>
-                            <ListItemText primary={a.value} secondary={a.trait_type}/>
-                        </ListItem>
-                    ))}
+            {nftMetadata.name ?
+            <>
+                <h2>NFT</h2>
+                <List id="nftMetadataList">
+                    <ListItem button>
+                        <ListItemText secondary="owner" primary={tokenOwner} />
+                    </ListItem>
+                    <Divider/>
+                    <ListItem button divider>
+                        <ListItemText secondary="name" primary={nftMetadata.name} />
+                    </ListItem>
+                    <ListItem button divider>
+                        <ListItemText secondary="description" primary={nftMetadata.description} />
+                    </ListItem>
+                    <ListItem button divider>
+                        <ListItemText secondary="mileage" primary={mileage} />
+                    </ListItem>
+                    <ListItem button divider>
+                        <div style={{ display: 'flex', flexDirection: 'column'}}>
+                            <img src ={nftImage} alt="NFT" id='nftImage'/>
+                            <ListItemText secondary="image"/>
+                        </div>
+                    </ListItem>
+                    <ListItem button onClick={handleAttributesClick}>
+                        <ListItemText primary="attributes"/>
+                        {attributesOpen ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={attributesOpen}>
+                        {nftMetadata.attributes?
+                        <List>
+                            {nftMetadata.attributes.map((a, index)=> (
+                                <ListItem button divider key={index} sx={{ pl: 4}}>
+                                    <ListItemText primary={a.value} secondary={a.trait_type}/>
+                                </ListItem>
+                            ))}
+                        </List>
+                        : <div></div>}
+                    </Collapse>
                 </List>
-                : <div></div>}
-            </Collapse>
-        </List>
+            </>
+            : <div></div>}
         </div>
     )
 }

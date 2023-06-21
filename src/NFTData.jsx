@@ -14,9 +14,6 @@ export function NFTData(props) {
     const [nftMetadata, setNftMetadata] = useState({});
     const [nftImage, setNftImage] = useState();
 
-    const [serialNumber, setSerialNumber] = useState("");
-    const [manufactureDate, setManufactureDate] = useState("");
-    const [type, setType] = useState("");
     const [mileage, setMileage] = useState("");
 
     async function getNFTData() {
@@ -32,20 +29,6 @@ export function NFTData(props) {
 
             setTokenURI(uri);
             setTokenOwner(owner);
-
-            try{
-                const serialNumber = await contract.serialNumber(tokenId);
-                const manufactureDate = await contract.manufactureDate(tokenId);
-                const type = await contract.typeOf(tokenId);
-
-                setSerialNumber(parseInt(serialNumber._hex.substring(2), 16));
-                setManufactureDate(parseInt(manufactureDate._hex.substring(2), 16));
-                setType(parseInt(type._hex.substring(2), 16));
-            }catch(err){
-                setSerialNumber("");
-                setManufactureDate("");
-                setType("");
-            }
 
             try{
                 const mileage = await contract.mileageOf(tokenId);
@@ -76,16 +59,6 @@ export function NFTData(props) {
             uri = uri.replace("{id}", padded);
 
             setTokenURI(uri);
-            
-
-            try{
-                const serialNumber = await contract.mileages(tokenId);
-                setSerialNumber(parseInt(serialNumber._hex.substring(2), 16));
-
-            }catch(err){
-                setSerialNumber("");
-                console.log(err);
-            }
 
             
         }catch(err){
