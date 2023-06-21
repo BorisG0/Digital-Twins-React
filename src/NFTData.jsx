@@ -18,6 +18,7 @@ export function NFTData(props) {
     const [serialNumber, setSerialNumber] = useState("");
     const [manufactureDate, setManufactureDate] = useState("");
     const [type, setType] = useState("");
+    const [mileage, setMileage] = useState("");
 
     const [attributesOpen, setAttributesOpen] = useState(false);
     const handleAttributesClick = () => {
@@ -25,7 +26,7 @@ export function NFTData(props) {
     }
 
     async function getNFTData() {
-        const abi = require("./abi/SneakerToken2.json");
+        const abi = require("./abi/BikeTwins.json");
 
         try{
             await window.ethereum.send("eth_requestAccounts");
@@ -53,6 +54,14 @@ export function NFTData(props) {
                 console.log(err);
             }
 
+            try{
+                const mileage = await contract.mileageOf(tokenId);
+                setMileage(parseInt(mileage._hex.substring(2), 16));
+            }catch(err){
+                setMileage("");
+                console.log(err);
+            }
+
             
         }catch(err){
             console.log(err);
@@ -73,7 +82,6 @@ export function NFTData(props) {
             const padded = hex.padStart(64, '0');
             
             uri = uri.replace("{id}", padded);
-            console.log(hex);
 
             setTokenURI(uri);
             
@@ -84,8 +92,6 @@ export function NFTData(props) {
 
             }catch(err){
                 setSerialNumber("");
-                setManufactureDate("");
-                setType("");
                 console.log(err);
             }
 
@@ -172,6 +178,8 @@ export function NFTData(props) {
         manufacture date: {manufactureDate}
         <br/>
         type: {type}
+        <br/>
+        mileage: {mileage}
     </div>
   );
 }
