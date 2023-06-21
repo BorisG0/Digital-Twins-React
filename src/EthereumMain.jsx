@@ -3,8 +3,10 @@ import { NFTData } from './NFTData';
 import React, { useEffect, useState } from 'react';
 import { ContractData } from "./ContractData";
 import { MileageManager } from "./MileageManager";
+import { Button } from '@mui/material';
 
 export function EthereumMain () {
+    const [adminPageOn, setAdminPageOn] = useState(false);
     const [contractAddress, setContractAddress] = useState("");
     const [contractOwner, setContractOwner] = useState("");
 
@@ -43,6 +45,7 @@ export function EthereumMain () {
 
     return (
         <div>
+            <Button variant="contained" onClick={() => setAdminPageOn(!adminPageOn)}>Toggle Admin Page</Button>
             {window.ethereum ?
                 <>
                     <p>MetaMask is installed!</p>
@@ -50,12 +53,20 @@ export function EthereumMain () {
                 </>
             : <p>MetaMask is not installed!</p>}
 
-            <h1>Ethereum Transactions</h1>
-            
-            <ContractData owner = {contractOwner} setContractOwner={setContractOwner} address={contractAddress} setAddress={setContractAddress}/>
+            {adminPageOn ?
+                <>
+                    <h1>Admin Page</h1>
+                    <ContractData owner = {contractOwner} setContractOwner={setContractOwner} address={contractAddress} setAddress={setContractAddress}/>
 
-            <NFTData address = {contractAddress}/>
-            <MileageManager address = {contractAddress}/>
+                    <NFTData address = {contractAddress}/>
+                    <MileageManager address = {contractAddress}/>
+                </>:
+                <>
+                    <h1>User Page</h1>
+                </>
+            }
+
+            
             {/* <MintNFT address = {contractAddress}/> */}
         </div>
     )

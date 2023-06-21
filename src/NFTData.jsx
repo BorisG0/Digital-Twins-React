@@ -51,7 +51,6 @@ export function NFTData(props) {
                 setSerialNumber("");
                 setManufactureDate("");
                 setType("");
-                console.log(err);
             }
 
             try{
@@ -59,7 +58,6 @@ export function NFTData(props) {
                 setMileage(parseInt(mileage._hex.substring(2), 16));
             }catch(err){
                 setMileage("");
-                console.log(err);
             }
 
             
@@ -131,7 +129,7 @@ export function NFTData(props) {
 
   return (
     <div id="nftMetadataDisplay">
-      <h1>Display Sneaker NFT</h1>
+      <h1>Display NFT</h1>
 
         <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
         <br/>
