@@ -4,6 +4,8 @@ import { ContractData } from "./ContractData";
 import { MileageManager } from "./MileageManager";
 import { Button } from '@mui/material';
 import { CollectionDisplay } from './CollectionDisplay';
+import { IPFSUploader } from './IPFSUploader';
+
 
 export function EthereumMain () {
     const [adminPageOn, setAdminPageOn] = useState(false);
@@ -37,6 +39,7 @@ export function EthereumMain () {
 
                     <NFTData address = {contractAddress}/>
                     <MileageManager address = {contractAddress}/>
+                    <IPFSUploader/>
                 </>:
                 <>
                     <CollectionDisplay/>
