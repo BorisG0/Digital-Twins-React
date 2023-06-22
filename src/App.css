@@ -6,8 +6,13 @@
   width: 80%;
 }
 
-#nftMetadataList{
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
+#nftMetadataDisplay{
+  width: 60%;
+  margin: 0 auto;
+}
+
+.nftCollection{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 }

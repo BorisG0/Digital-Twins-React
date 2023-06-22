@@ -52,9 +52,11 @@ export function CollectionDisplay () {
             <Button variant="contained" onClick={getBalanceOf}>show</Button>
             <p>Balance: {userBalance}</p>
 
-            {userNFTs.map((id, index)=> (
-                <NFTDisplayCall tokenId={id} address={contractAddress} key={index}/>
-            ))}
+            <div class="nftCollection">
+                {userNFTs.map((id, index)=> (
+                    <NFTDisplayCall tokenId={id} address={contractAddress} key={index}/>
+                ))}
+            </div>
         </div>
     )
 }
