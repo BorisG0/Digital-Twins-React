@@ -1,6 +1,7 @@
 import { TextField, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ethers } from "ethers";
+import { NFTDisplayCall } from './NFTDisplayCall.jsx';
 
 export function CollectionDisplay () {
     const abi = require("./abi/BikeTwins.json");
@@ -49,7 +50,10 @@ export function CollectionDisplay () {
             <br/>
             <Button variant="contained" onClick={getBalanceOf}>get balance</Button>
             <p>Balance: {userBalance}</p>
-            <p>NFTs: {userNFTs.map((nft, index) => <span key={index}>{nft} </span>)}</p>
+            
+            {userNFTs.map((id, index)=> (
+                <NFTDisplayCall tokenId={id} address={contractAddress} key={index}/>
+            ))}
         </div>
     )
 }
