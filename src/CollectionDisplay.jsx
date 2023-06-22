@@ -19,7 +19,8 @@ export function CollectionDisplay () {
             const contract = new ethers.Contract(contractAddress, abi, provider);
 
             const balance = await contract.balanceOf(userAddress);
-            setUserBalance(parseInt(balance._hex.substring(2), 16));
+            const balanceInt = parseInt(balance._hex.substring(2), 16)
+            setUserBalance(balanceInt);
 
             let NFTs = [];
 
@@ -28,8 +29,8 @@ export function CollectionDisplay () {
                     const owner = await contract.ownerOf(i);
                     console.log(i, owner);
                     if(owner.toLowerCase() === userAddress.toLowerCase()){
-                        console.log("setting nft")
                         NFTs.push(i);
+                        if(NFTs.length === balanceInt) break;
                     }
                 }catch(err){
                     console.log(i, "no owner");

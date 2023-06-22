@@ -13,7 +13,7 @@ export function NFTData(props) {
 
         <TextField type="number" id="tokenId" placeholder="Token ID" value={tokenId} onChange={e => setTokenId(e.target.value)}/>
 
-        <NFTDisplayCall tokenId={tokenId} address={props.address}/>
+        {tokenId ? <NFTDisplayCall tokenId={tokenId} address={props.address}/> : <div></div>}
     </div>
   );
 }

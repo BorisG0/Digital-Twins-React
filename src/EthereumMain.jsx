@@ -42,9 +42,6 @@ export function EthereumMain () {
                     <CollectionDisplay/>
                 </>
             }
-
-            
-            {/* <MintNFT address = {contractAddress}/> */}
         </div>
     )
 }
