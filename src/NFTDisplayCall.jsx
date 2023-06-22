@@ -42,7 +42,7 @@ export function NFTDisplayCall({tokenId, address}) {
             }
         };
         fetchData();
-    }, [tokenId]);
+    }, [tokenId, address]);
 
     useEffect(() => {
         const fetchData = async () => {

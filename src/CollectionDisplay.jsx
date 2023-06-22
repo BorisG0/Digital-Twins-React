@@ -48,7 +48,7 @@ export function CollectionDisplay () {
             <h2>Collection Display</h2>
             <TextField type="text" placeholder="user address" value={userAddress} onChange={e => setUserAddress(e.target.value)}/>
             <br/>
-            <Button variant="contained" onClick={getBalanceOf}>get balance</Button>
+            <Button variant="contained" onClick={getBalanceOf}>show</Button>
             <p>Balance: {userBalance}</p>
 
             {userNFTs.map((id, index)=> (
