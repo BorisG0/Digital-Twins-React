@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NFTDisplay} from './NFTDisplay';
 
-export function NFTDisplayCall({owner, tokenId, address}) {
+export function NFTDisplayCall({tokenId, address}) {
     const apiURL = "https://gateway.pinata.cloud/ipfs/";
 
     const [tokenURI, setTokenURI] = useState(null);
@@ -12,6 +12,8 @@ export function NFTDisplayCall({owner, tokenId, address}) {
     const [nftImage, setNftImage] = useState();
 
     const [mileage, setMileage] = useState("");
+
+    const [tokenOwner, setTokenOwner] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,8 +25,10 @@ export function NFTDisplayCall({owner, tokenId, address}) {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const contract = new ethers.Contract(address, abi, provider);
                 const uri = await contract.tokenURI(tokenId);
+                const owner = await contract.ownerOf(tokenId);
 
                 setTokenURI(uri);
+                setTokenOwner(owner);
 
                 try{
                     const mileage = await contract.mileageOf(tokenId);
@@ -69,7 +73,7 @@ export function NFTDisplayCall({owner, tokenId, address}) {
 
     return(
         <div>
-            <NFTDisplay tokenOwner={owner} nftMetadata={nftMetadata} nftImage={nftImage} mileage={mileage}/>
+            <NFTDisplay tokenOwner={tokenOwner} nftMetadata={nftMetadata} nftImage={nftImage} mileage={mileage}/>
         </div>
     )
 }

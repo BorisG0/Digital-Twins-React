@@ -52,7 +52,7 @@ export function CollectionDisplay () {
             <p>Balance: {userBalance}</p>
 
             {userNFTs.map((id, index)=> (
-                <NFTDisplayCall tokenId={id} address={contractAddress} owner={userAddress} key={index}/>
+                <NFTDisplayCall tokenId={id} address={contractAddress} key={index}/>
             ))}
         </div>
     )
