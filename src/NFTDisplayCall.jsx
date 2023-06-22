@@ -1,8 +1,17 @@
 import { ethers } from "ethers";
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { NFTDisplay} from './NFTDisplay';
 
-export function NFTDisplayCall({tokenId, address}) {
+export function NFTDisplayCall({owner, tokenId, address}) {
+    const apiURL = "https://gateway.pinata.cloud/ipfs/";
+
     const [tokenURI, setTokenURI] = useState(null);
+
+    const [nftMetadata, setNftMetadata] = useState({});
+    const [nftImage, setNftImage] = useState();
+
+    const [mileage, setMileage] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -16,6 +25,14 @@ export function NFTDisplayCall({tokenId, address}) {
                 const uri = await contract.tokenURI(tokenId);
 
                 setTokenURI(uri);
+
+                try{
+                    const mileage = await contract.mileageOf(tokenId);
+                    setMileage(parseInt(mileage._hex.substring(2), 16));
+                }catch(err){
+                    setMileage("");
+                }
+
             }catch(err){
                 console.log(err);
             }
@@ -23,12 +40,36 @@ export function NFTDisplayCall({tokenId, address}) {
         fetchData();
     }, [tokenId]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if(!tokenURI) return;
+
+                const tokenURISplit = tokenURI.split('/');
+                
+                let tokenHash = tokenURISplit[tokenURISplit.length - 1];
+                if(tokenHash.length !== 46){
+                    tokenHash = tokenURISplit[tokenURISplit.length - 2] + "/" + tokenHash;
+                }
+
+                const response = await axios.get(apiURL + tokenHash);
+                setNftMetadata(response.data);
+                const imgUrlSplit = response.data.image.split('/');
+                const imgHash = imgUrlSplit[imgUrlSplit.length - 1];
+
+                setNftImage(apiURL + imgHash);
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, [tokenURI]);
+
 
     return(
         <div>
-            <h2>NFT</h2>
-            <p>tokenId: {tokenId} address: {address}</p>
-            <p>tokenURI: {tokenURI}</p>
+            <NFTDisplay tokenOwner={owner} nftMetadata={nftMetadata} nftImage={nftImage} mileage={mileage}/>
         </div>
     )
 }

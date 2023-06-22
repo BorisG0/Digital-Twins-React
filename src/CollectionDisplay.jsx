@@ -50,9 +50,9 @@ export function CollectionDisplay () {
             <br/>
             <Button variant="contained" onClick={getBalanceOf}>get balance</Button>
             <p>Balance: {userBalance}</p>
-            
+
             {userNFTs.map((id, index)=> (
-                <NFTDisplayCall tokenId={id} address={contractAddress} key={index}/>
+                <NFTDisplayCall tokenId={id} address={contractAddress} owner={userAddress} key={index}/>
             ))}
         </div>
     )
