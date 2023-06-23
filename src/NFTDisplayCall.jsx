@@ -73,7 +73,7 @@ export function NFTDisplayCall({tokenId, address}) {
 
     return(
         <div>
-            <NFTDisplay tokenOwner={tokenOwner} nftMetadata={nftMetadata} nftImage={nftImage} mileage={mileage}/>
+            <NFTDisplay tokenOwner={tokenOwner} nftMetadata={nftMetadata} nftImage={nftImage} mileage={mileage} tokenId={tokenId} contractAddress={address}/>
         </div>
     )
 }

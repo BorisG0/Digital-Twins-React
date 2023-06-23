@@ -1,8 +1,8 @@
-import { List, ListItem, ListItemText, Divider, Collapse } from '@mui/material';
+import { List, ListItem, ListItemText, Divider, Collapse, Link } from '@mui/material';
 import {ExpandLess, ExpandMore} from '@mui/icons-material';
 import { useState } from 'react';
 
-export function NFTDisplay({tokenOwner, nftMetadata, nftImage, mileage}){
+export function NFTDisplay({tokenOwner, nftMetadata, nftImage, mileage, tokenId, contractAddress}){
 
     const [attributesOpen, setAttributesOpen] = useState(false);
     const handleAttributesClick = () => {
@@ -27,6 +27,9 @@ export function NFTDisplay({tokenOwner, nftMetadata, nftImage, mileage}){
                     </ListItem>
                     <ListItem button divider>
                         <ListItemText secondary="mileage" primary={mileage} />
+                    </ListItem>
+                    <ListItem button divider>
+                        <Link href={`https://testnets.opensea.io/assets/goerli/${contractAddress}/${tokenId}`}>OpenSea</Link>
                     </ListItem>
                     <ListItem button divider>
                         <div style={{ display: 'flex', flexDirection: 'column'}}>
