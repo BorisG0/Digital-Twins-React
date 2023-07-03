@@ -1,9 +1,14 @@
 # Bike Digital Twins
 
-## Start
-run `npm start` to start the app
+## Requirenments
 
-you need to have the MetaMask, or another ethereum injected provider, browser extension installed
+NodeJS\
+MetaMask, or another ethereum injected provider, browser extension installed
+
+## Start
+
+run `npm install` before starting the first time\
+run `npm start` to start the app
 
 ## Examples on Goerli Testnet
 
